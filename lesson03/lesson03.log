@@ -1,0 +1,157 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2022.10.10 10:37:40 =~=~=~=~=~=~=~=~=~=~=~=
+sudo apt-get install \
+>     ca-certificates \
+>     curl \
+>     gnupg \
+>     lsb-release
+
+Reading package lists... 100%
+
+=~=~=~=~=~=~=~=~=~=~=~= cut =~=~=~=~=~=~=~=~=~=~=~=
+
+
+Reading state information... Done
+
+lsb-release is already the newest version (11.1.0ubuntu2).
+lsb-release set to manually installed.
+ca-certificates is already the newest version (20211016~20.04.1).
+curl is already the newest version (7.68.0-1ubuntu2.13).
+gnupg is already the newest version (2.2.19-3ubuntu2.2).
+0 upgraded, 0 newly installed, 0 to remove and 1 not upgraded.
+vagrant@ubuntu:~$ sudo mkdir -p /etc/apt/keyrings
+vagrant@ubuntu:~$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+vagrant@ubuntu:~$ echo \
+>   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+>   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+vagrant@ubuntu:~$ sudo apt-get update
+
+Reading package lists... Done
+
+
+vagrant@ubuntu: ~$ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+Reading state information... Done
+
+
+The following additional packages will be installed:
+  docker-ce-rootless-extras docker-scan-plugin libltdl7 libslirp0 pigz slirp4netns
+Suggested packages:
+  aufs-tools cgroupfs-mount | cgroup-lite
+The following NEW packages will be installed:
+  containerd.io docker-ce docker-ce-cli docker-ce-rootless-extras docker-compose-plugin docker-scan-plugin libltdl7 libslirp0 pigz slirp4netns
+0 upgraded, 10 newly installed, 0 to remove and 1 not upgraded.
+Need to get 109 MB of archives.
+After this operation, 423 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+
+=~=~=~=~=~=~=~=~=~=~=~= cut =~=~=~=~=~=~=~=~=~=~=~=
+
+
+vagrant@ubuntu:~$ sudo service docker start
+vagrant@ubuntu:~$ sudo docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+=~=~=~=~=~=~=~=~=~=~=~= cut =~=~=~=~=~=~=~=~=~=~=~=
+
+vagrant@ubuntu:~$ docker pull mongo
+vagrant@ubuntu:~$ sudo docker run mongo -p 27017:27017
+
+vagrant@ubuntu:~$ sudo docker network create mongo-net
+3ec861f877f510c027c08134db6ff91f1bbfef30689c1002fea80bd35b6f0f4a
+vagrant@ubuntu:~$ sudo docker run --name mongo-server --network mongo-net -d -p 27017:27017 mongo
+a047bdcbee85e427218dfd607ffe77a35dc5f8d135ec697b1a1fbe53e1a12eca
+vagrant@ubuntu:~$ sudo docker inspect mongo-server | grep IPAddress 
+            "Secondary[01;31m[KIPAddress[m[Kes": null,
+            "[01;31m[KIPAddress[m[K": "",
+                    "[01;31m[KIPAddress[m[K": "172.18.0.2",
+vagrant@ubuntu:~$ sudo docker run -it --rm --name mongo-client --network mongo-net mongo:5.0.4 mongo mongo-server
+Unable to find image 'mongo:5.0.4' locally
+5.0.4: Pulling from library/mongo
+
+=~=~=~=~=~=~=~=~=~=~=~= cut =~=~=~=~=~=~=~=~=~=~=~=
+
+vagrant@ubuntu:~$ sudo docker run -it --rm --name mongo-client --network mongo-net mongo:5.0.4 mongo 172.18.0.2
+MongoDB shell version v5.0.4
+connecting to: mongodb://172.18.0.2:27017/test?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("c63fe8f0-38a3-4e8f-b998-718dbd33a991") }
+MongoDB server version: 6.0.2
+WARNING: shell and server versions do not match
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+Welcome to the MongoDB shell.
+
+> use admin;[3G[Juse admin;[13G
+switched to db admin
+> db.createUser( { user: "root", pwd: "otus$123", roles: [ "userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase" ] } )[3G[Jdb.createUser( { user: "root", pwd: "otus$123", roles: [ "userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase" ] } )[134G
+Successfully added user: {
+	"user" : "root",
+	"roles" : [
+		"userAdminAnyDatabase",
+		"dbAdminAnyDatabase",
+		"readWriteAnyDatabase"
+	]
+}
+> exit[3G[Jexit[7G
+bye
+
+=~=~=~=~=~=~=~=~=~=~=~= cut =~=~=~=~=~=~=~=~=~=~=~=
+
+vagrant@ubuntu:~$ sudo apt install mongodb-clients
+
+vagrant@ubuntu:~$ mongo 172.18.0.2:27017 -u root -p otus\$123 --authenticationDatabase admin
+
+MongoDB shell version v3.6.8
+connecting to: mongodb://172.18.0.2:27017/test
+Implicit session: session { "id" : UUID("c3e65b40-791d-480f-b416-16667135383e") }
+MongoDB server version: 6.0.2
+WARNING: shell and server versions do not match
+Welcome to the MongoDB shell.
+For interactive help, type "help".
+For more comprehensive documentation, see
+	http://docs.mongodb.org/
+Questions? Try the support group
+	http://groups.google.com/group/mongodb-user
+Server has startup warnings: 
+{"t":{"$date":"2022-10-10T07:53:02.763+00:00"},"s":"I",  "c":"STORAGE",  "id":22297,   "ctx":"initandlisten","msg":"Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem","tags":["startupWarnings"]}
+
+{"t":{"$date":"2022-10-10T07:53:03.367+00:00"},"s":"W",  "c":"CONTROL",  "id":22120,   "ctx":"initandlisten","msg":"Access control is not enabled for the database. Read and write access to data and configuration is unrestricted","tags":["startupWarnings"]}
+
+{"t":{"$date":"2022-10-10T07:53:03.367+00:00"},"s":"W",  "c":"CONTROL",  "id":5123300, "ctx":"initandlisten","msg":"vm.max_map_count is too low","attr":{"currentValue":65530,"recommendedMinimum":1677720,"maxConns":838860},"tags":["startupWarnings"]}
+
+> db.peoples.find()
+> exit
+bye
+
+vagrant@ubuntu:~$ sudo docker stop mongo-server
+mongo-server
+vagrant@ubuntu:~$ sudo docker rm mongo-server
+mongo-server
