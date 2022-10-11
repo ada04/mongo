@@ -55,7 +55,10 @@ sudo systemctl restart mongod
 
 mongodb://root:otus@192.168.1.16:27017/
 
+**Восстановим коллекцию с бсоном**
+_не сразу понял как указать базу данных, в которую необходимо загрузить коллекцию. Оказалось, что в строке подключения указывается БД в которой создан пользователь, а аргументом передается имя БД для коллекции..._
 
+mongorestore --uri='mongodb://root:otus@127.0.0.1:27017/?authSource=admin&directConnection=true' -d orders -c people --verbose people.bson
 
 
 
