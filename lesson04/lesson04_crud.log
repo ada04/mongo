@@ -1,0 +1,204 @@
+$ mongosh mongodb://root:otus@127.0.0.1:27017/?authSource=admin
+Current Mongosh Log ID: 634543fe9e6cb75bd2dac2c3
+Connecting to:          mongodb://<credentials>@127.0.0.1:27017/?authSource=admin&directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0
+Using MongoDB:          6.0.2
+Using Mongosh:          1.6.0
+
+For mongosh info see: https://docs.mongodb.com/mongodb-shell/
+
+test> use orders
+switched to db orders
+orders> db.hello()
+{
+  isWritablePrimary: true,
+  topologyVersion: {
+    processId: ObjectId("6345051f04a978ac544f38b2"),
+    counter: Long("0")
+  },
+  maxBsonObjectSize: 16777216,
+  maxMessageSizeBytes: 48000000,
+  maxWriteBatchSize: 100000,
+  localTime: ISODate("2022-10-11T10:23:10.548Z"),
+  logicalSessionTimeoutMinutes: 30,
+  connectionId: 273,
+  minWireVersion: 0,
+  maxWireVersion: 17,
+  readOnly: false,
+  ok: 1
+}
+orders> db
+orders
+orders> show dbs
+admin    132.00 KiB
+config   128.00 KiB
+local     72.00 KiB
+orders   166.41 MiB
+twitter    1.50 MiB
+orders>  show collections
+albums
+books
+city_inspections
+companies
+countries
+covers
+grades
+images
+people
+products
+profiles
+restaurant
+students
+Tweets
+orders> print("Hello, world")
+Hello, world
+
+orders> for(var i = 0; i<5; i++) {print(i);}
+0
+1
+2
+3
+4
+
+orders> 42+99
+141
+orders> db.stats()
+{
+  db: 'orders',
+  collections: 14,
+  views: 0,
+  objects: 1232544,
+  avgObjSize: 984.2826665822884,
+  dataSize: 1213171695,
+  storageSize: 161046528,
+  indexes: 14,
+  indexSize: 13447168,
+  totalSize: 174493696,
+  scaleFactor: 1,
+  fsUsedSize: 12830253056,
+  fsTotalSize: 125695524864,
+  ok: 1
+}
+orders>  db.books.find({"_id" : 20})
+[
+  {
+    _id: 20,
+    title: 'Taming Jaguar',
+    isbn: '1884777686',
+    pageCount: 362,
+    publishedDate: ISODate("2000-07-01T07:00:00.000Z"),
+    thumbnailUrl: 'https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/barlotta3.jpg',
+    longDescription: "Taming Jaguar is part of the PowerBuilder Developer's series, which includes Distributed Application Development with PowerBuilder 6 and Jaguar Development with PowerBuilder 7.    An application server is the heart of your enterprise computing architecture, centralizing your web content, business logic, and access to your data and legacy applications. Sybase's application server, Jaguar CTS, delivers performance, scalability, and flexibility running CORBA , COM, Java/EJB, C++, and PowerBuilder components.    If you are looking to adopt Jaguar in your enterprise, look no further. Taming Jaguar shows you how to solve the real-world problems of installing, trouble-shooting, designing, developing, and maintaining a Jaguar application. Topical chapters are organized in a Q & A format making it easy for you to quickly find the solution to your problem. They also provide foundational and background information as well as detailed technical how-tos.    Although designed so you can find your problems easily, this book is meant to be read cover-to-cover with each chapter discussing its topic exhaustively.    What's inside:    J2EE development  Java Servlets  Jaguar administration & code balancing  EJBs  Web development with PowerDynamo  Advanced component design ",
+    status: 'PUBLISH',
+    authors: [ 'Michael J. Barlotta', 'Jason R. Weiss' ],
+    categories: [ 'PowerBuilder' ]
+  }
+]
+orders> db.books.find({"longDescription" : {$regex: "Jaguar"}})
+[
+  {
+    _id: 19,
+    title: 'Jaguar Development with PowerBuilder 7',
+    isbn: '1884777864',
+    pageCount: 550,
+    publishedDate: ISODate("1999-08-01T07:00:00.000Z"),
+    thumbnailUrl: 'https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/barlotta2.jpg',
+    shortDescription: 'Jaguar Development with PowerBuilder 7 is the definitive guide to distributed application development with PowerBuilder. It is the only book dedicated to preparing PowerBuilder developers for Jaguar applications and has been approved by Sybase engineers and product specialists who build the tools described in the book.',
+    longDescription: 'Jaguar Development with PowerBuilder 7 is the definitive guide to distributed application development with PowerBuilder. It is the only book dedicated to preparing PowerBuilder developers for Jaguar applications and has been approved by Sybase engineers and product specialists who build the tools described in the book.    Jaguar Development with PowerBuilder 7 focuses on getting you up to speed on Jaguar and PowerBuilder, and it is packed with code samples to guide you every step of the way. It covers each step involved in application development, from setting up the development environment to deploying a production application.    Even a PowerBuilder developer with no experience in distributed technologies or Jaguar CTS will learn what it takes to build an application. Jaguar Development with PowerBuilder 7 covers:    Developing Component-centric Applications  Building Jaguar CTS Components/Clients  CORBA  Adaptive SQL Anywhere  Adaptive Server Enterprise  and lots more!',
+    status: 'PUBLISH',
+    authors: [ 'Michael Barlotta' ],
+    categories: [ 'PowerBuilder', 'Client-Server' ]
+  },
+  {
+    _id: 20,
+    title: 'Taming Jaguar',
+    isbn: '1884777686',
+    pageCount: 362,
+    publishedDate: ISODate("2000-07-01T07:00:00.000Z"),
+    thumbnailUrl: 'https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/barlotta3.jpg',
+    longDescription: "Taming Jaguar is part of the PowerBuilder Developer's series, which includes Distributed Application Development with PowerBuilder 6 and Jaguar Development with PowerBuilder 7.    An application server is the heart of your enterprise computing architecture, centralizing your web content, business logic, and access to your data and legacy applications. Sybase's application server, Jaguar CTS, delivers performance, scalability, and flexibility running CORBA , COM, Java/EJB, C++, and PowerBuilder components.    If you are looking to adopt Jaguar in your enterprise, look no further. Taming Jaguar shows you how to solve the real-world problems of installing, trouble-shooting, designing, developing, and maintaining a Jaguar application. Topical chapters are organized in a Q & A format making it easy for you to quickly find the solution to your problem. They also provide foundational and background information as well as detailed technical how-tos.    Although designed so you can find your problems easily, this book is meant to be read cover-to-cover with each chapter discussing its topic exhaustively.    What's inside:    J2EE development  Java Servlets  Jaguar administration & code balancing  EJBs  Web development with PowerDynamo  Advanced component design ",
+    status: 'PUBLISH',
+    authors: [ 'Michael J. Barlotta', 'Jason R. Weiss' ],
+    categories: [ 'PowerBuilder' ]
+  }
+]
+orders> db.books.find({"pageCount" : {$gt: 800}}).count()
+13
+orders> db.books.find({"publishedDate" : {$gte : new ISODate("1999-01-01T00:00:00.000Z")}}).count()
+311
+orders> db.books.find({$and :[{"pageCount" : {$gt: 800}}, {"publishedDate" : {$gte : new ISODate("2001-01-01T00:00:00.000Z")}}]}).count()
+11
+orders> db.books.find().limit(0)
+... вывод всех документов
+orders> db.books.find().limit(1)
+... вывод только одного документа
+orders> db.books.aggregate([{$group : {_id : "$status", count_books : {$sum : 1}}}])
+[
+  { _id: 'MEAP', count_books: 68 },
+  { _id: 'PUBLISH', count_books: 363 }
+]
+
+orders> db.books.count()
+431
+orders> db.books.countDocuments()
+431
+orders> db.books.count({"publishedDate": {$gte : new ISODate("2001-01-01T00:00:00.000Z") }} )
+287
+orders> db.books.find({"_id": 1})
+[
+  {
+    _id: 1,
+    title: 'Unlocking Android',
+    isbn: '1933988673',
+    pageCount: 416,
+    publishedDate: ISODate("2009-04-01T07:00:00.000Z"),
+    thumbnailUrl: 'https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ableson.jpg',
+    shortDescription: "Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout.",
+    longDescription: "Android is an open source mobile phone platform based on the Linux operating system and developed by the Open Handset Alliance, a consortium of over 30 hardware, software and telecom companies that focus on open standards for mobile devices. Led by search giant, Google, Android is designed to deliver a better and more open and cost effective mobile experience.    Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout. Based on his mobile development experience and his deep knowledge of the arcane Android technical documentation, the author conveys the know-how you need to develop practical applications that build upon or replace any of Androids features, however small.    Unlocking Android: A Developer's Guide prepares the reader to embrace the platform in easy-to-understand language and builds on this foundation with re-usable Java code examples. It is ideal for corporate and hobbyists alike who have an interest, or a mandate, to deliver software functionality for cell phones.    WHAT'S INSIDE:        * Android's place in the market      * Using the Eclipse environment for Android development      * The Intents - how and why they are used      * Application classes:            o Activity            o Service            o IntentReceiver       * User interface design      * Using the ContentProvider to manage data      * Persisting data with the SQLite database      * Networking examples      * Telephony applications      * Notification methods      * OpenGL, animation & multimedia      * Sample Applications  ",
+    status: 'PUBLISH',
+    authors: [ 'W. Frank Ableson', 'Charlie Collins', 'Robi Sen' ],
+    categories: [ 'Open Source', 'Mobile' ]
+  }
+]
+orders> db.books.updateOne({"_id": 1}, {"pageCount" : 496})
+MongoInvalidArgumentError: Update document requires atomic operators
+orders> db.books.update({"_id": 1}, {"pageCount" : 496})
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+MongoInvalidArgumentError: Update document requires atomic operators
+orders> db.books.updateOne({"_id": 1}, {$set: {"pageCount" : 496}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+orders> db.books.find({"_id": 1})
+[
+  {
+    _id: 1,
+    title: 'Unlocking Android',
+    isbn: '1933988673',
+    pageCount: 496,
+    publishedDate: ISODate("2009-04-01T07:00:00.000Z"),
+    thumbnailUrl: 'https://s3.amazonaws.com/AKIAJC5RLADLUMVRPFDQ.book-thumb-images/ableson.jpg',
+    shortDescription: "Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout.",
+    longDescription: "Android is an open source mobile phone platform based on the Linux operating system and developed by the Open Handset Alliance, a consortium of over 30 hardware, software and telecom companies that focus on open standards for mobile devices. Led by search giant, Google, Android is designed to deliver a better and more open and cost effective mobile experience.    Unlocking Android: A Developer's Guide provides concise, hands-on instruction for the Android operating system and development tools. This book teaches important architectural concepts in a straightforward writing style and builds on this with practical and useful examples throughout. Based on his mobile development experience and his deep knowledge of the arcane Android technical documentation, the author conveys the know-how you need to develop practical applications that build upon or replace any of Androids features, however small.    Unlocking Android: A Developer's Guide prepares the reader to embrace the platform in easy-to-understand language and builds on this foundation with re-usable Java code examples. It is ideal for corporate and hobbyists alike who have an interest, or a mandate, to deliver software functionality for cell phones.    WHAT'S INSIDE:        * Android's place in the market      * Using the Eclipse environment for Android development      * The Intents - how and why they are used      * Application classes:            o Activity            o Service            o IntentReceiver       * User interface design      * Using the ContentProvider to manage data      * Persisting data with the SQLite database      * Networking examples      * Telephony applications      * Notification methods      * OpenGL, animation & multimedia      * Sample Applications  ",
+    status: 'PUBLISH',
+    authors: [ 'W. Frank Ableson', 'Charlie Collins', 'Robi Sen' ],
+    categories: [ 'Open Source', 'Mobile' ]
+  }
+]
+orders> db.books.deleteOne({"_id": 1})
+{ acknowledged: true, deletedCount: 1 }
+orders> db.books.countDocuments()
+430
+orders> db.books.deleteMany({})
+{ acknowledged: true, deletedCount: 430 }
+orders> db.books.countDocuments()
+0
+orders>
+
+
+
+
+orders>
