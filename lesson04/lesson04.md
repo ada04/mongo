@@ -63,6 +63,37 @@ _не сразу понял как указать базу данных, в ко
 mongorestore --uri='mongodb://root:otus@127.0.0.1:27017/?authSource=admin&directConnection=true' -d orders -c people --verbose people.bson
 
 **Выполняем запросы**
+```sql
+use orders
+db.hello()
+db
+show dbs
+show collections
+print("Hello, world")
+for(var i = 0; i<5; i++) {print(i);}
+42+99
+db.stats()
+db.books.find({"_id" : 20})
+db.books.find({"longDescription" : {$regex: "Jaguar"}})
+db.books.find({"pageCount" : {$gt: 800}}).count()
+db.books.find({"publishedDate" : {$gte : new ISODate("1999-01-01T00:00:00.000Z")}}).count()
+db.books.find({$and :[{"pageCount" : {$gt: 800}}, {"publishedDate" : {$gte : new ISODate("2001-01-01T00:00:00.000Z")}}]}).count()
+db.books.find().limit(0)
+db.books.find().limit(1)
+db.books.aggregate([{$group : {_id : "$status", count_books : {$sum : 1}}}])
+db.books.count()
+db.books.countDocuments()
+db.books.count({"publishedDate": {$gte : new ISODate("2001-01-01T00:00:00.000Z") }} )
+db.books.find({"_id": 1})
+db.books.updateOne({"_id": 1}, {"pageCount" : 496})
+db.books.update({"_id": 1}, {"pageCount" : 496})
+db.books.updateOne({"_id": 1}, {$set: {"pageCount" : 496}})
+db.books.find({"_id": 1})
+db.books.deleteOne({"_id": 1})
+db.books.countDocuments()
+db.books.deleteMany({})
+db.books.countDocuments()
+```
 
 Read more [here](./lesson04_crud.log)
 
