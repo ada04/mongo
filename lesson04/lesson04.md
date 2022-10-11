@@ -4,7 +4,7 @@
 **Установка mongo**
 * Для установки сервера был выбран домашний сервер с Ubuntu 20.04
 
------установка mongo-------
+**установка mongo**
 ```bash
 wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
@@ -51,10 +51,9 @@ net:
 sudo systemctl restart mongod
 ```
 
-*Пропишем подлкючение для Atlas:
-mongodb://root:otus@51.250.101.44:27017/otus?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false
+**Пропишем подлкючение для Compass**
 
-
+mongodb://root:otus@192.168.1.16:27017/
 
 
 
