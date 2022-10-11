@@ -12,9 +12,9 @@ apt-get install -y mongodb-org
 sudo systemctl start mongod
 sudo systemctl status mongod
 
------проверяем подключение--------
+* проверяем подключение
 mongosh --port 27017
-
+```sql
 Current Mongosh Log ID: 634509ca35e0f3fa231a5464
 Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.0
 Using MongoDB:          6.0.2
@@ -23,21 +23,22 @@ Using Mongosh:          1.6.0
 For mongosh info see: https://docs.mongodb.com/mongodb-shell/
 
 test>
+```
 
-----создаем юзера---------
+**создаем пользователя**
 test> use admin
 switched to db admin
 admin> db.createUser( { user: "root", pwd: "otus", roles: [ "userAdminAnyDatabase", "dbAdminAnyDatabase", "readWriteAnyDatabase" ] } )
 { ok: 1 }
 
-*Правим mongod.conf
+* Правим mongod.conf
 
 security:
   authorization: enabled
 net:  
   bindIpAll: true
   
-*перезапускаем сервер
+* перезапускаем сервер
 sudo systemctl restart mongod
 
 *Пропишем подлкючение для Atlas:
